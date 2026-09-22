@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Monzacar - Concesionario Online</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23142452'/%3E%3Crect x='20' y='40' width='22' height='22' fill='%23f2701e'/%3E%3C/svg%3E" />
+<style>
+  :root{
+    --navy:#142452; --navy-2:#1e3a8a; --orange:#f2701e; --orange-dark:#d85e12;
+    --ink:#151a2e; --muted:#5b6178; --line:#e3e6f0; --bg-alt:#f6f7fc;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:'Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;background:var(--bg-alt);color:var(--ink);}
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;}
+
+  header{background:var(--navy);color:#fff;padding:18px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10;box-shadow:0 2px 8px rgba(0,0,0,.1);}
+  .header-logo{display:flex;align-items:center;gap:8px;font-weight:800;font-size:18px;}
+  .header-logo .sq{width:11px;height:11px;background:var(--orange);border-radius:3px;}
+  .header-logo b{color:var(--orange);}
+  .header-links{display:flex;gap:20px;align-items:center;}
+  .header-links a{color:#fff;font-weight:600;font-size:14px;}
+  .header-links a:hover{opacity:.8;}
+  .admin-link{width:36px;height:36px;background:rgba(242,112,30,.15);border:1.5px solid rgba(242,112,30,.3);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;transition:all .2s;}
+  .admin-link:hover{background:rgba(242,112,30,.25);border-color:rgba(242,112,30,.5);}
+
+  .hero{background:linear-gradient(135deg, #142452 0%, #1e3a8a 100%);color:#fff;padding:60px 20px;text-align:center;}
+  .hero h1{margin:0 0 12px;font-size:42px;font-weight:800;}
+  .hero p{margin:0 0 24px;font-size:18px;opacity:.95;}
+  .hero .btn{display:inline-block;background:var(--orange);color:#fff;padding:14px 32px;border-radius:8px;font-weight:700;transition:background .2s;}
+  .hero .btn:hover{background:var(--orange-dark);}
+
+  main{max-width:1200px;margin:0 auto;padding:50px 20px;}
+  .section-title{text-align:center;font-size:32px;font-weight:800;margin:0 0 40px;color:var(--navy);}
+
+  .cars-grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(340px, 1fr));gap:24px;}
+  .car-card{background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,.08);transition:transform .2s, box-shadow .2s;border:1px solid var(--line);}
+  .car-card:hover{transform:translateY(-6px);box-shadow:0 12px 24px rgba(0,0,0,.12);}
+
+  .car-image{width:100%;height:220px;background:var(--bg-alt);overflow:hidden;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:14px;font-weight:600;}
+  .car-image img{width:100%;height:100%;object-fit:cover;}
+
+  .car-content{padding:20px;}
+  .car-title{font-size:19px;font-weight:800;color:var(--navy);margin:0 0 12px;}
+
+  .car-specs{display:flex;flex-direction:column;gap:8px;font-size:13px;margin-bottom:16px;}
+  .spec{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--line);color:var(--muted);}
+  .spec strong{color:var(--ink);}
+
+  .car-price{font-size:26px;font-weight:800;color:var(--orange);margin:16px 0;}
+  .car-desc{font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.5;}
+
+  .car-actions{display:flex;gap:10px;}
+  .btn-contact{flex:1;background:var(--orange);color:#fff;border:none;padding:12px;border-radius:8px;font-weight:700;font-size:14px;transition:background .2s;}
+  .btn-contact:hover{background:var(--orange-dark);}
+
+  .empty-state{text-align:center;padding:80px 20px;color:var(--muted);}
+  .empty-state h2{font-size:26px;margin-bottom:8px;}
+
+  footer{background:var(--navy);color:#fff;padding:40px 20px;text-align:center;margin-top:60px;}
+  .footer-content{max-width:600px;margin:0 auto;}
+  footer p{margin:8px 0;}
+  footer a{color:var(--orange);font-weight:600;}
+
+  @media (max-width:640px){
+    .cars-grid{grid-template-columns:1fr;}
+    .hero h1{font-size:28px;}
+    .header-links{gap:10px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-logo"><span class="sq"></span>MONZA<b>CAR</b></div>
+  <div class="header-links">
+    <a href="#coches">Catálogo</a>
+    <a href="https://wa.me/34123456789" target="_blank">📞 WhatsApp</a>
+    <a href="/admin.html" class="admin-link" title="Admin">⚙️</a>
+  </div>
+</header>
+
+<div class="hero">
+  <h1>Monzacar</h1>
+  <p>Tu concesionario online con los mejores coches del mercado</p>
+  <a href="#coches" class="btn">Ver catálogo</a>
+</div>
+
+<main>
+  <h2 class="section-title" id="coches">🚗 Nuestro catálogo</h2>
+  <div id="carsList" class="cars-grid">
+    <div class="empty-state" style="grid-column:1/-1;">
+      <h2>Cargando coches...</h2>
+      <p>Por favor espera un momento</p>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-content">
+    <p><strong>&copy; 2024 Monzacar</strong> — Tu concesionario online</p>
+    <p>📍 Fuerteventura, Canarias</p>
+    <p>📞 <a href="tel:+34123456789">+34 123 456 789</a> — 📧 <a href="mailto:info@monzacar.com">info@monzacar.com</a></p>
+  </div>
+</footer>
+
+<script>
+  function loadCars(){
+    const list = document.getElementById('carsList');
+    const stored = localStorage.getItem('mz_cars');
+    const cars = stored ? JSON.parse(stored) : [];
+    const published = cars.filter(c => c.publicado !== false);
+    const sorted = [...published].sort((a,b) => (a.orden ?? 0) - (b.orden ?? 0));
+
+    if(!sorted.length){
+      list.innerHTML = '<div class="empty-state" style="grid-column:1/-1;"><h2>📭 No hay coches disponibles</h2><p>Vuelve pronto para ver nuestras nuevas ofertas</p></div>';
+      return;
+    }
+
+    list.innerHTML = sorted.map(car => {
+      const title = [car.marca, car.modelo, car.version].filter(Boolean).join(' ');
+      const thumb = car.fotos && car.fotos[0] ? car.fotos[0] : '';
+      const badges = [];
+      if(car.destacado) badges.push('<span style="background:#fff7ed;color:#d85e12;padding:2px 6px;border-radius:4px;font-size:11px;font-weight:700;">⭐ Destacado</span>');
+      if(car.garantia) badges.push('<span style="background:#f0fdf4;color:#1f9d55;padding:2px 6px;border-radius:4px;font-size:11px;font-weight:700;">✓ Garantía</span>');
+      return `
+        <div class="car-card">
+          <div class="car-image">${thumb ? `<img src="${thumb}" alt="${title}" />` : 'SIN FOTO'}</div>
+          <div class="car-content">
+            <div class="car-title">${title}</div>
+            <div class="car-specs">
+              ${car.anio ? `<div class="spec"><span>📅 Año</span> <strong>${car.anio}</strong></div>` : ''}
+              ${car.km ? `<div class="spec"><span>🛣️ Km</span> <strong>${car.km}</strong></div>` : ''}
+              ${car.combustible ? `<div class="spec"><span>⛽ Combustible</span> <strong>${car.combustible}</strong></div>` : ''}
+              ${car.cambio ? `<div class="spec"><span>⚙️ Cambio</span> <strong>${car.cambio}</strong></div>` : ''}
+            </div>
+            ${car.precio ? `<div class="car-price">${car.precio}€</div>` : ''}
+            ${car.descripcion ? `<div class="car-desc">"${car.descripcion}"</div>` : ''}
+            ${badges.length ? `<div style="margin-bottom:16px;display:flex;gap:6px;flex-wrap:wrap;">${badges.join('')}</div>` : ''}
+            <div class="car-actions">
+              <a href="https://wa.me/34123456789?text=Hola, me interesa el ${encodeURIComponent(title)}" target="_blank" class="btn-contact">💬 WhatsApp</a>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  window.addEventListener('storage', loadCars);
+  loadCars();
+</script>
+
+</body>
+</html>
