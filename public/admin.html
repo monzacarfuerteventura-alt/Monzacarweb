@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Monzacar</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 28px;
+        }
+
+        .logout-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .logout-btn:hover {
+            background: #c0392b;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .form-section {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .form-section h2 {
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            font-family: inherit;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .btn-submit {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            width: 100%;
+            transition: background 0.3s;
+        }
+
+        .btn-submit:hover {
+            background: #5568d3;
+        }
+
+        .cars-list {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .cars-list h2 {
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 20px;
+        }
+
+        .car-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            border-left: 4px solid #667eea;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .car-info h3 {
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .car-info p {
+            color: #777;
+            font-size: 14px;
+            margin: 3px 0;
+        }
+
+        .car-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-edit, .btn-delete {
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .btn-edit {
+            background: #3498db;
+            color: white;
+        }
+
+        .btn-edit:hover {
+            background: #2980b9;
+        }
+
+        .btn-delete {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .btn-delete:hover {
+            background: #c0392b;
+        }
+
+        .empty-message {
+            color: #999;
+            text-align: center;
+            padding: 30px;
+            font-size: 14px;
+        }
+
+        .message {
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            .header {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚗 Panel Admin Monzacar</h1>
+            <button class="logout-btn" onclick="goToHome()">Volver a Home</button>
+        </div>
+
+        <div class="main-content">
+            <div class="form-section">
+                <h2>➕ Agregar Nuevo Coche</h2>
+                <div id="message" class="message"></div>
+
+                <form id="carForm" onsubmit="addCar(event)">
+                    <div class="form-group">
+                        <label for="marca">Marca *</label>
+                        <input type="text" id="marca" name="marca" required placeholder="Ej: BMW, Mercedes, etc">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="modelo">Modelo *</label>
+                        <input type="text" id="modelo" name="modelo" required placeholder="Ej: 320i, C-Class, etc">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ano">Año *</label>
+                        <input type="number" id="ano" name="ano" required min="1990" max="2099">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="precio">Precio (€) *</label>
+                        <input type="number" id="precio" name="precio" required min="0" step="100">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="kilometraje">Kilometraje (km) *</label>
+                        <input type="number" id="kilometraje" name="kilometraje" required min="0">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="color">Color *</label>
+                        <input type="text" id="color" name="color" required placeholder="Ej: Negro, Blanco, Azul">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="combustible">Combustible *</label>
+                        <select id="combustible" name="combustible" required>
+                            <option value="">Selecciona combustible</option>
+                            <option value="Gasolina">Gasolina</option>
+                            <option value="Diésel">Diésel</option>
+                            <option value="Híbrido">Híbrido</option>
+                            <option value="Eléctrico">Eléctrico</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="descripcion">Descripción</label>
+                        <textarea id="descripcion" name="descripcion" placeholder="Detalles adicionales del coche..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="imagen">URL de Imagen</label>
+                        <input type="url" id="imagen" name="imagen" placeholder="https://ejemplo.com/imagen.jpg">
+                    </div>
+
+                    <button type="submit" class="btn-submit">📤 Publicar Coche</button>
+                </form>
+            </div>
+
+            <div class="cars-list">
+                <h2>📋 Coches Publicados</h2>
+                <div id="carsList" class="empty-message">Cargando coches...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Cargar coches al abrir la página
+        loadCars();
+
+        // Función para agregar un nuevo coche
+        function addCar(event) {
+            event.preventDefault();
+
+            const car = {
+                id: Date.now(),
+                marca: document.getElementById('marca').value,
+                modelo: document.getElementById('modelo').value,
+                ano: parseInt(document.getElementById('ano').value),
+                precio: parseFloat(document.getElementById('precio').value),
+                kilometraje: parseInt(document.getElementById('kilometraje').value),
+                color: document.getElementById('color').value,
+                combustible: document.getElementById('combustible').value,
+                descripcion: document.getElementById('descripcion').value,
+                imagen: document.getElementById('imagen').value || 'https://via.placeholder.com/300x200?text=Coche',
+                fecha: new Date().toLocaleDateString('es-ES')
+            };
+
+            let cars = JSON.parse(localStorage.getItem('monzacarCars')) || [];
+            cars.push(car);
+            localStorage.setItem('monzacarCars', JSON.stringify(cars));
+
+            // Mostrar mensaje de éxito
+            showMessage('✅ ¡Coche publicado exitosamente!', 'success');
+
+            // Limpiar formulario
+            document.getElementById('carForm').reset();
+
+            // Recargar lista
+            loadCars();
+        }
+
+        // Función para cargar los coches
+        function loadCars() {
+            let cars = JSON.parse(localStorage.getItem('monzacarCars')) || [];
+            const carsList = document.getElementById('carsList');
+
+            if (cars.length === 0) {
+                carsList.innerHTML = '<div class="empty-message">No hay coches publicados aún. ¡Agrega el primero!</div>';
+                return;
+            }
+
+            carsList.innerHTML = cars.map(car => `
+                <div class="car-item">
+                    <div class="car-info">
+                        <h3>${car.marca} ${car.modelo} (${car.ano})</h3>
+                        <p>💶 ${car.precio.toLocaleString('es-ES')} €</p>
+                        <p>🛣️ ${car.kilometraje.toLocaleString('es-ES')} km</p>
+                        <p>🎨 ${car.color} | ⛽ ${car.combustible}</p>
+                        <p>📅 Publicado: ${car.fecha}</p>
+                    </div>
+                    <div class="car-actions">
+                        <button class="btn-delete" onclick="deleteCar(${car.id})">🗑️ Eliminar</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Función para eliminar un coche
+        function deleteCar(id) {
+            if (confirm('¿Estás seguro de que quieres eliminar este coche?')) {
+                let cars = JSON.parse(localStorage.getItem('monzacarCars')) || [];
+                cars = cars.filter(car => car.id !== id);
+                localStorage.setItem('monzacarCars', JSON.stringify(cars));
+                showMessage('✅ Coche eliminado', 'success');
+                loadCars();
+            }
+        }
+
+        // Función para mostrar mensajes
+        function showMessage(text, type) {
+            const messageDiv = document.getElementById('message');
+            messageDiv.textContent = text;
+            messageDiv.className = `message ${type}`;
+            setTimeout(() => {
+                messageDiv.className = 'message';
+            }, 3000);
+        }
+
+        // Función para volver a home
+        function goToHome() {
+            window.location.href = '/index.html';
+        }
+    </script>
+</body>
+</html>
